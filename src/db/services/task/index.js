@@ -1,5 +1,5 @@
 import express from "express";
-import {Task} from "../../../server.js"; 
+import { Task } from "../../../server.js";
 import Op from "sequelize";
 
 const taskRouter = express.Router();
@@ -21,7 +21,7 @@ deleted the selected task
 taskRouter
   .get("/", async (req, res, next) => {
     try {
-      const tasks = await models.Task.findAll({
+      const tasks = await Task.findAll({
         where: {
           done: false,
         },
@@ -33,7 +33,7 @@ taskRouter
   })
   .post("/", async (req, res, next) => {
     try {
-      const task = await models.Task.create(req.body);
+      const task = await Task.create(req.body);
       res.status(201).send(task);
     } catch (error) {
       next(error);
@@ -41,7 +41,7 @@ taskRouter
   })
   .put("/:id", async (req, res, next) => {
     try {
-      const task = await models.Task.update(req.body, {
+      const task = await Task.update(req.body, {
         where: {
           id: req.params.id,
         },
@@ -53,7 +53,7 @@ taskRouter
   })
   .delete("/:id", async (req, res, next) => {
     try {
-      const task = await models.Task.destroy({
+      const task = await Task.destroy({
         where: {
           id: req.params.id,
         },
@@ -65,7 +65,7 @@ taskRouter
   })
   .get("/:id", async (req, res, next) => {
     try {
-      const tasks = await models.Task.findAll({
+      const tasks = await Task.findAll({
         where: {
           id: req.params.id,
           done: false,
