@@ -8,6 +8,19 @@ import plannerRouter from './db/services/planner/index.js'
 const server = express();
 const PORT = process.env.PORT || 3001;
 
+const whiteList = [process.env.FE_LOCAL_URL, process.env.FE_REMOTE_URL];
+
+const corsOptions = {
+  origin: function (origin, next) {
+      console.log(origin);
+    if (!origin || whiteList.indexOf(origin) !== -1) {
+      next(null, true);
+    } else {
+      next(new Error("Not allowed by CORS"));
+    }
+  },
+};
+
 import Planner from './db/models/planner.js'
 import Task from './db/models/task.js'
 
