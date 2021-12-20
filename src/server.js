@@ -3,15 +3,31 @@ import listEndpoints from "express-list-endpoints";
 import { testConnection, connectDB } from "./db/connect.js";
 import cors from "cors";
 import taskRouter from "./db/services/task/index.js";
+import plannerRouter from './db/services/planner/index.js'
+
+
+
 
 const server = express();
 
 const PORT = process.env.PORT || 3001;
 
-server.use(express.json());
-server.use(cors());
+import Planner from './db/models/planner.js'
+// ***************************** TABLE RELATIONS *****************
+// Planner.hasMany(Task, { onDelete: "CASCADE" });
+// Task.belongsTo(Planner, { onDelete: "CASCADE" });
 
-server.use("/tasks", taskRouter);
+export {Planner}
+
+// ***************************** END OF TABLE RELATIONS *****************
+
+
+// ************************* START OF ROUTERS **************************
+  server.use(express.json())
+  server.use("/planners", plannerRouter)
+
+  // ************************* END OF ROUTERS **************************
+
 
 server.listen(PORT, async () => {
   console.log(`Server is running on port ${PORT}`);
