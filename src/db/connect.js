@@ -26,7 +26,6 @@ export const testConnection = async () => {
 export const connectDB = async () => {
   try {
     console.log("syncronizes all tables in connectDB");
-    await sequelize.sync(/* { force: true } */);
   } catch (error) {
     console.log(error);
   }
