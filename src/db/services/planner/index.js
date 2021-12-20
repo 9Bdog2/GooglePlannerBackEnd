@@ -1,11 +1,13 @@
 import express from 'express'
-import {Planner} from '../../../server.js'
+import {Planner, Task} from '../../../server.js'
 
 const plannerRouter = express.Router()
 
 plannerRouter.get("/", async(request, response, next)=> {
     try {
-        const data = await Planner.findAll()
+        const data = await Planner.findAll({
+            include:Task
+        })
         response.send(data)
     } catch (error) {
         next(error)
@@ -22,7 +24,9 @@ plannerRouter.post("/", async(request, response, next)=> {
 })
 plannerRouter.get("/:id", async(request, response, next)=> {
     try {
-        const getById = await Planner.findByPk(request.params.id)
+        const getById = await Planner.findByPk(request.params.id, {
+            include:Task
+        })
         if(getById){
             response.send(getById)
         }else{

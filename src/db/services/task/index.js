@@ -1,5 +1,5 @@
 import express from "express";
-import { Task } from "../../../server.js";
+import {Task, Planner} from "../../../server.js"; 
 import Op from "sequelize";
 
 const taskRouter = express.Router();
@@ -22,6 +22,7 @@ taskRouter
   .get("/", async (req, res, next) => {
     try {
       const tasks = await Task.findAll({
+        include:Planner,
         where: {
           done: false,
         },
@@ -42,6 +43,7 @@ taskRouter
   .put("/:id", async (req, res, next) => {
     try {
       const task = await Task.update(req.body, {
+        include:Planner,
         where: {
           id: req.params.id,
         },
