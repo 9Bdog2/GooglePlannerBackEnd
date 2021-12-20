@@ -12,7 +12,6 @@ const sequelize = new Sequelize(DATABASE_URL, {
   },
 });
 
-console.log("sequilize instance created");
 
 export const testConnection = async () => {
   try {
@@ -26,7 +25,7 @@ export const testConnection = async () => {
 export const connectDB = async () => {
   try {
     console.log("syncronizes all tables in connectDB");
-  } catch (error) {
+    } catch (error) {
     console.log(error);
   }
 };

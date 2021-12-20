@@ -14,8 +14,9 @@ plannerRouter.get("/", async(request, response, next)=> {
 plannerRouter.post("/", async(request, response, next)=> {
     try {
         const newPlanner = await Planner.create(request.body)
-        response.send(newPlanner.rows[0])
+        response.status(201).send(newPlanner)
     } catch (error) {
+        console.log(error);
         next(error)
     }
 })

@@ -1,6 +1,6 @@
 import express from "express";
 import listEndpoints from "express-list-endpoints";
-import  Sequelize, { testConnection, connectDB } from "./db/connect.js";
+import  sequelize, {testConnection} from "./db/connect.js";
 import cors from "cors";
 import taskRouter from "./db/services/task/index.js";
 import plannerRouter from './db/services/planner/index.js'
