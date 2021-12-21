@@ -1,5 +1,5 @@
 import express from "express";
-import {Task, Planner} from "../../../server.js"; 
+import { Task, Planner } from "../../../server.js";
 import Op from "sequelize";
 
 const taskRouter = express.Router();
@@ -22,7 +22,7 @@ taskRouter
   .get("/", async (req, res, next) => {
     try {
       const tasks = await Task.findAll({
-        include:Planner,
+        include: Planner,
         where: {
           done: false,
         },
@@ -43,7 +43,7 @@ taskRouter
   .put("/:id", async (req, res, next) => {
     try {
       const task = await Task.update(req.body, {
-        include:Planner,
+        include: Planner,
         where: {
           id: req.params.id,
         },
@@ -60,7 +60,10 @@ taskRouter
           id: req.params.id,
         },
       });
-      res.status(201).send(task);
+      if (task > 0)
+        res.send(
+          `The chosen Task with a specific Id ${req.params.id} is deleted`
+        );
     } catch (error) {
       next(error);
     }
