@@ -53,12 +53,12 @@ plannerRouter.put("/:id", async(request, response, next)=> {
 })
 plannerRouter.delete("/:id", async(request, response, next)=> {
     try {
-        const deletePlannetr = await Planner.destroy({
+        const deletePlanner = await Planner.destroy({
             where:{
                 id:request.params.id
             }
         })
-        if (deleteProduct > 0) {
+        if (deletePlanner > 0) {
             response.send(
               `The chosen Product with a specific Id ${request.params.id} is deleted`
             );
