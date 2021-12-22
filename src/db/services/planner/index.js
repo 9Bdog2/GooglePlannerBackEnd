@@ -1,5 +1,6 @@
 import express from 'express'
 import {Planner, Task} from '../../../server.js'
+import { Op } from "sequelize";
 
 const plannerRouter = express.Router()
 
@@ -44,11 +45,21 @@ plannerRouter.get("/search/:query", async(request, response, next)=> {
         const search = await Planner.findOne({
             include:Task,
             where:{
-                name:request.params.query
-            }
+                ...(request.params.query && {
+                    [Op.or]: [
+                      {
+                        name: { [Op.iLike]: `%${request.params.query}%` },
+                      },
+                      
+                    ],
+                  }),
+            },
+            // limit:request.params.limit,
+            // offset: parseInt(request.params.limit * request.params.page)
         })
         response.send(search)
     } catch (error) {
+        console.log("Error is:", error);
         next(error)
     }
 })
