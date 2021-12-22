@@ -38,6 +38,20 @@ plannerRouter.get("/:id", async(request, response, next)=> {
         next(error)
     }
 })
+
+plannerRouter.get("/search/:query", async(request, response, next)=> {
+    try {
+        const search = await Planner.findOne({
+            include:Task,
+            where:{
+                name:request.params.query
+            }
+        })
+        response.send(search)
+    } catch (error) {
+        next(error)
+    }
+})
 plannerRouter.put("/:id", async(request, response, next)=> {
     try {
         const updatePlanner = await Planner.update(request.body, {
